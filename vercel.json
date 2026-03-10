@@ -7,6 +7,22 @@
   "domains": ["unfoold.space", "www.unfoold.space"],
   "rewrites": [
     {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/logos/(.*)",
+      "destination": "/logos/$1"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/manifest.json"
+    },
+    {
+      "source": "/service-worker.js",
+      "destination": "/service-worker.js"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
