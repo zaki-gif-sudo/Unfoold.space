@@ -116,15 +116,12 @@ export const AuthProvider = ({ children }) => {
         membershipLevel: 'Coffee Guest'
       }, { $autoCancel: false });
 
-      // Auto login after signup (with timeout to prevent hanging)
+      // Auto login after signup (without timeout - simplified)
       try {
-        await Promise.race([
-          login(data.email, data.password),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Login timeout')), 5000))
-        ]);
+        await login(data.email, data.password);
       } catch (loginError) {
-        console.warn("Auto-login after signup failed, user can login manually:", loginError);
-        // Don't throw - signup succeeded, just login failed (user can try manual login)
+        console.warn("Auto-login after signup failed:", loginError);
+        // Signup succeeded, just auto-login failed - user can login manually
       }
       
       return record;
