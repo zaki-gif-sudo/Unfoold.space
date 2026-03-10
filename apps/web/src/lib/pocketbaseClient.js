@@ -4,17 +4,25 @@ const POCKETBASE_API_URL = import.meta.env.VITE_POCKETBASE_URL || 'https://api.u
 
 const pocketbaseClient = new Pocketbase(POCKETBASE_API_URL);
 
-// Add request timeout to prevent hanging
+// Add request timeout using AbortController
 pocketbaseClient.beforeSend = function(url, init) {
-  // Set timeout to 15 seconds for PocketBase requests
-  init.timeout = 15000;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+  
+  const originalFetch = init?.fetch || fetch;
+  init.fetch = async (req) => {
+    try {
+      const response = await originalFetch(req);
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
+  };
+  
   return { url, init };
 };
-
-// Better error handling
-pocketbaseClient.on('error', (error) => {
-  console.error('PocketBase error:', error);
-});
 
 export default pocketbaseClient;
 
