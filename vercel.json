@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "bash apps/web/build.sh",
+  "buildCommand": "npm run build --prefix apps/web",
   "outputDirectory": "apps/web/dist",
   "framework": "vite",
   "devCommand": "npm run dev --prefix apps/web",
