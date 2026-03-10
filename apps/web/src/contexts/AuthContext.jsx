@@ -89,13 +89,48 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signup = async (data) => {
-    const record = await pb.collection('users').create({
-      ...data,
-      loyaltyPoints: 0,
-      membershipLevel: 'Coffee Guest'
-    }, { $autoCancel: false });
-    await login(data.email, data.password);
-    return record;
+    try {
+      // Validate input
+      if (!data.name || !data.email || !data.password) {
+        throw new Error('Semua field harus diisi');
+      }
+
+      if (data.password !== data.passwordConfirm) {
+        throw new Error('Password tidak cocok');
+      }
+
+      if (data.password.length < 8) {
+        throw new Error('Password minimal 8 karakter');
+      }
+
+      // Create user record
+      const record = await pb.collection('users').create({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        passwordConfirm: data.passwordConfirm,
+        loyaltyPoints: 0,
+        membershipLevel: 'Coffee Guest'
+      }, { $autoCancel: false });
+
+      // Auto login after signup
+      await login(data.email, data.password);
+      
+      return record;
+    } catch (error) {
+      console.error('Signup error:', error);
+      
+      // Parse PocketBase error messages
+      if (error.data?.data?.email?.message) {
+        throw new Error('Email sudah terdaftar');
+      } else if (error.message.includes('network')) {
+        throw new Error('Koneksi error. Cek internet Anda.');
+      } else if (error.status === 400) {
+        throw new Error('Data tidak valid. Coba lagi.');
+      }
+      
+      throw error;
+    }
   };
 
   const requestPasswordReset = async (email) => {
