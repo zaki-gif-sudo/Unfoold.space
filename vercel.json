@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cat apps/web/.env.production >> apps/web/.env && npm run build --prefix apps/web",
+  "buildCommand": "bash apps/web/build.sh",
   "outputDirectory": "apps/web/dist",
   "framework": "vite",
   "devCommand": "npm run dev --prefix apps/web",
