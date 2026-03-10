@@ -7,10 +7,10 @@
   "rewrites": [
     {
       "source": "/pb/:path*",
-      "destination": "http://31.97.223.103:8090/:path*"
+      "destination": "/api/pb"
     },
     {
-      "source": "/((?!assets|logos|manifest.json|service-worker.js).*)",
+      "source": "/((?!assets|logos|manifest.json|service-worker.js|api).*)",
       "destination": "/index.html"
     }
   ]
