@@ -52,17 +52,20 @@ export const AuthProvider = ({ children }) => {
     try {
       const authData = await pb.collection('users').authWithPassword(email, password, { $autoCancel: false });
       
-      // Initialize push notifications after successful login
-      await initializePushNotifications().catch(err => 
-        console.log('Push notifications not available:', err)
-      );
-      
       // Clear attempts on success
       setLoginAttempts(prev => {
         const newAttempts = { ...prev };
         delete newAttempts[email];
         return newAttempts;
       });
+      
+      // Initialize push notifications async (don't wait for it)
+      Promise.race([
+        initializePushNotifications(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000))
+      ]).catch(err => 
+        console.log('Push notifications not available:', err)
+      );
       
       return authData;
     } catch (error) {
@@ -113,8 +116,16 @@ export const AuthProvider = ({ children }) => {
         membershipLevel: 'Coffee Guest'
       }, { $autoCancel: false });
 
-      // Auto login after signup
-      await login(data.email, data.password);
+      // Auto login after signup (with timeout to prevent hanging)
+      try {
+        await Promise.race([
+          login(data.email, data.password),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Login timeout')), 5000))
+        ]);
+      } catch (loginError) {
+        console.warn("Auto-login after signup failed, user can login manually:", loginError);
+        // Don't throw - signup succeeded, just login failed (user can try manual login)
+      }
       
       return record;
     } catch (error) {
