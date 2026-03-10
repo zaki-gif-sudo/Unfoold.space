@@ -6,6 +6,10 @@
   "devCommand": "npm run dev --prefix apps/web",
   "routes": [
     {
+      "src": "/pb/(.*)",
+      "dest": "http://31.97.223.103:8090/$1"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
     },
