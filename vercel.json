@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build --prefix apps/web",
+  "outputDirectory": "apps/web/dist",
+  "framework": "vite",
+  "devCommand": "npm run dev --prefix apps/web",
+  "env": {
+    "VITE_POCKETBASE_URL": "@vite_pocketbase_url",
+    "VITE_VAPID_PUBLIC_KEY": "@vite_vapid_public_key",
+    "VITE_NOTIFICATIONS_OPTIONAL": "true"
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
