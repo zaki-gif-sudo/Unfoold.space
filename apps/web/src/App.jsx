@@ -20,6 +20,8 @@ const SignupPage = lazy(() => import('./pages/SignupPage.jsx'));
 const UserDashboard = lazy(() => import('./pages/UserDashboard.jsx'));
 const MenuPage = lazy(() => import('./pages/MenuPage.jsx'));
 const ReservationPage = lazy(() => import('./pages/ReservationPage.jsx'));
+const ReservationPageEnhanced = lazy(() => import('./pages/ReservationPageEnhanced.jsx'));
+const CapacityManagement = lazy(() => import('./pages/CapacityManagement.jsx'));
 const EventsListingPage = lazy(() => import('./pages/EventsListingPage.jsx'));
 const EventDetailPage = lazy(() => import('./pages/EventDetailPage.jsx'));
 const DiscussionsPage = lazy(() => import('./pages/DiscussionsPage.jsx'));
@@ -62,8 +64,10 @@ function AppRoutes() {
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+              <Route path="/reserve" element={<ProtectedRoute><ReservationPageEnhanced /></ProtectedRoute>} />
+              <Route path="/reserve-old" element={<ProtectedRoute><ReservationPage /></ProtectedRoute>} />
+              <Route path="/capacity" element={<ProtectedRoute><CapacityManagement /></ProtectedRoute>} />
               <Route path="/kasir" element={<ProtectedRoute><KasirDashboard /></ProtectedRoute>} />
-              <Route path="/reserve" element={<ProtectedRoute><ReservationPage /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
               <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
             </Routes>
