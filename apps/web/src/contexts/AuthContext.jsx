@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import pb from '@/lib/pocketbaseClient.js';
-import { initializePushNotifications } from '@/utils/push-notification.js';
+// import { initializePushNotifications } from '@/utils/push-notification.js';
 
 const AuthContext = createContext();
 
@@ -59,13 +59,13 @@ export const AuthProvider = ({ children }) => {
         return newAttempts;
       });
       
-      // Initialize push notifications async (don't wait for it)
-      Promise.race([
-        initializePushNotifications(),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000))
-      ]).catch(err => 
-        console.log('Push notifications not available:', err)
-      );
+      // Push notifications disabled for now - debugging
+      // Promise.race([
+      //   initializePushNotifications(),
+      //   new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000))
+      // ]).catch(err => 
+      //   console.log('Push notifications not available:', err)
+      // );
       
       return authData;
     } catch (error) {
