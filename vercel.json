@@ -4,7 +4,6 @@
   "outputDirectory": "apps/web/dist",
   "framework": "vite",
   "devCommand": "npm run dev --prefix apps/web",
-  "domains": ["unfoold.space", "www.unfoold.space"],
   "rewrites": [
     {
       "source": "/assets/(.*)",
