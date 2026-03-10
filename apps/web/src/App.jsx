@@ -26,6 +26,7 @@ const DiscussionsPage = lazy(() => import('./pages/DiscussionsPage.jsx'));
 const DiscussionDetailPage = lazy(() => import('./pages/DiscussionDetailPage.jsx'));
 const ProfileSettingsPage = lazy(() => import('./pages/ProfileSettingsPage.jsx'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation.jsx'));
+const KasirDashboard = lazy(() => import('./pages/KasirDashboard.jsx'));
 const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'));
 
 // Auth Redirect Component
@@ -61,6 +62,7 @@ function AppRoutes() {
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+              <Route path="/kasir" element={<ProtectedRoute><KasirDashboard /></ProtectedRoute>} />
               <Route path="/reserve" element={<ProtectedRoute><ReservationPage /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
               <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
