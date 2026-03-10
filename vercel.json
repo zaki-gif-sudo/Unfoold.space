@@ -1,14 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "npm run build --prefix apps/web",
+  "buildCommand": "cat apps/web/.env.production >> apps/web/.env && npm run build --prefix apps/web",
   "outputDirectory": "apps/web/dist",
   "framework": "vite",
   "devCommand": "npm run dev --prefix apps/web",
-  "env": {
-    "VITE_POCKETBASE_URL": "http://api.unfoold.space",
-    "VITE_VAPID_PUBLIC_KEY": "BCz53E3BrX344cD6fkhzRPlLOMA2Mc84Cnt7Y-z090_BlegkTINsPylD7GMGhO4YAMwNQOGxI7qdpY_ccCVPg_I",
-    "VITE_NOTIFICATIONS_OPTIONAL": "true"
-  },
   "rewrites": [
     {
       "source": "/assets/(.*)",
