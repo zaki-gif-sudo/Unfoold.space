@@ -4,26 +4,26 @@
   "outputDirectory": "apps/web/dist",
   "framework": "vite",
   "devCommand": "npm run dev --prefix apps/web",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
     },
     {
-      "source": "/logos/(.*)",
-      "destination": "/logos/$1"
+      "src": "/logos/(.*)",
+      "dest": "/logos/$1"
     },
     {
-      "source": "/manifest.json",
-      "destination": "/manifest.json"
+      "src": "/manifest.json",
+      "dest": "/manifest.json"
     },
     {
-      "source": "/service-worker.js",
-      "destination": "/service-worker.js"
+      "src": "/service-worker.js",
+      "dest": "/service-worker.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
