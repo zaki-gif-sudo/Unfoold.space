@@ -1,15 +1,18 @@
 ## Pages
 - [| Unfoold Discussions](/discussiondetail): No description available
 - [Booking Confirmed | Unfoold Espresso](/reservation): No description available
+- [Capacity Management | Unfoold](/capacitymanagement): No description available
 - [Community Discussions | Unfoold Espresso](/discussions): No description available
 - [Community Events | Unfoold Espresso](/community): No description available
-- [Create New Password | Unfoold Espresso](/resetpassword): No description available
+- [Daftar | Unfoold Coffee & Events](/signup): No description available
 - [Dashboard | Unfoold Espresso](/userdashboard): No description available
-- [Forgot Password | Unfoold Espresso](/forgotpassword): No description available
+- [Invalid Link | Unfoold](/resetpassword): No description available
+- [Kasir Dashboard | Unfoold](/kasirdashboard): No description available
 - [Login | Unfoold Espresso](/login): No description available
+- [Lupa Password | Unfoold Coffee & Events](/forgotpassword): No description available
 - [Menu | Unfoold Espresso](/menu): No description available
 - [Offline | Unfoold Espresso](/offline): No description available
 - [Order Confirmed | Unfoold Espresso](/orderconfirmation): No description available
 - [Profile Settings | Unfoold Espresso](/profilesettings): No description available
-- [Sign Up | Unfoold Espresso](/signup): No description available
+- [Reservasi Dikonfirmasi | Unfoold](/reservationpageenhanced): No description available
 - [Unfoold Espresso | Coffee. Conversation. Culture.](/home): No description available
