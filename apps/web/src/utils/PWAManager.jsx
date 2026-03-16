@@ -3,15 +3,13 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const PWAContext = createContext(null);
 
 export const registerServiceWorker = () => {
-  // Disabled for debugging - service worker causing request hangs
-  console.log('Service worker registration disabled for debugging');
-  return;
-  
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js')
         .then((registration) => {
           console.log('SW registered: ', registration);
+          // Check for updates periodically
+          setInterval(() => registration.update(), 60 * 60 * 1000);
         })
         .catch((registrationError) => {
           console.log('SW registration failed: ', registrationError);
@@ -36,7 +34,7 @@ export const PWAProvider = ({ children }) => {
     // Minimal splash screen timer
     const splashTimer = setTimeout(() => {
       setShowSplash(false);
-    }, 2500);
+    }, 600);
 
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();

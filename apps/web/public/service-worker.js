@@ -1,4 +1,4 @@
-const CACHE_NAME = 'unfoold-cache-v3';
+const CACHE_NAME = 'unfoold-cache-v5';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -37,9 +37,22 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // Cache-first strategy for static assets (CSS, JS, Fonts, Images)
+  // NEVER intercept API calls, PocketBase, push service, or WebSocket connections
+  // This prevents the SW from hanging/blocking API requests
   if (
-    url.pathname.match(/\.(js|css|png|jpg|jpeg|svg|ico|woff|woff2|ttf)$/) || 
+    url.hostname.includes('api.unfoold.space') ||
+    url.pathname.startsWith('/api/') ||
+    url.pathname.startsWith('/push/') ||
+    url.pathname.includes('/_/') ||
+    event.request.url.includes('/api/') ||
+    url.protocol === 'ws:' ||
+    url.protocol === 'wss:'
+  ) {
+    return; // Let browser handle it directly
+  }
+
+  // Cache-first strategy for CDN/font assets only
+  if (
     url.hostname.includes('horizons-cdn') ||
     url.hostname.includes('fonts.googleapis.com') ||
     url.hostname.includes('fonts.gstatic.com')
@@ -57,33 +70,30 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-first strategy for API calls and HTML navigation
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        if (response && response.status === 200 && response.type === 'basic') {
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((response) => {
-          if (response) {
-            return response;
+  // Network-first for same-origin navigation (HTML pages)
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => caches.match('/index.html'))
+    );
+    return;
+  }
+
+  // For other static assets (.js, .css, images) - network first with cache fallback
+  if (url.pathname.match(/\.(js|css|png|jpg|jpeg|svg|ico|woff|woff2|ttf)$/)) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           }
-          if (event.request.mode === 'navigate') {
-            return caches.match('/offline') || caches.match('/index.html');
-          }
-          return new Response('Offline content not available', {
-            status: 503,
-            statusText: 'Service Unavailable'
-          });
-        });
-      })
-  );
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
 });
 
 // ============ Push Notification Handlers ============
@@ -103,30 +113,33 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body: data.body || '',
-    icon: '/img/icons/192.png',
-    badge: '/img/badge.png',
+    icon: 'https://horizons-cdn.hostinger.com/13222a4f-1f4e-4729-8f8a-40893789af3d/a43b5512ea4f27d91a3517ce14f19e8c.jpg',
+    badge: 'https://horizons-cdn.hostinger.com/13222a4f-1f4e-4729-8f8a-40893789af3d/a43b5512ea4f27d91a3517ce14f19e8c.jpg',
     tag: data.tag || 'notification',
-    requireInteraction: false,
+    requireInteraction: true,
+    vibrate: [200, 100, 200, 100, 200],
+    actions: [
+      { action: 'open', title: 'Lihat Pesanan' },
+      { action: 'dismiss', title: 'Tutup' }
+    ],
     data: {
-      url: data.data?.url || '/',
-      notificationId: data.data?.notificationId,
+      url: data.data?.url || '/dashboard',
     },
   };
 
   event.waitUntil(
     self.registration
-      .showNotification(data.title || 'New notification', options)
+      .showNotification(data.title || 'Unfoold', options)
       .then(() => {
-        // Notify all clients about the new notification
         return self.clients.matchAll({ type: 'window' }).then((clients) => {
           clients.forEach((client) => {
             client.postMessage({
-              type: 'NEW_NOTIFICATION',
+              type: 'PUSH_NOTIFICATION',
               payload: {
                 title: data.title,
                 body: data.body,
                 url: data.data?.url,
-                notificationId: data.data?.notificationId,
+                tag: data.tag,
               },
             });
           });
@@ -139,15 +152,21 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
-  const url = event.notification.data.url || '/';
+  const url = event.notification.data?.url || '/dashboard';
+  const action = event.action;
+
+  if (action === 'dismiss') return;
 
   event.waitUntil(
-    self.clients.matchAll({ type: 'window' }).then((clients) => {
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
       // Try to find and focus existing window
       for (let i = 0; i < clients.length; i++) {
         const client = clients[i];
-        if (client.url === url && 'focus' in client) {
-          return client.focus();
+        if ('focus' in client) {
+          return client.focus().then((c) => {
+            c.postMessage({ type: 'NAVIGATE', url: url });
+            return c;
+          });
         }
       }
       // If not found, open new window

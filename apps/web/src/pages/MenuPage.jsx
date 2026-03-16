@@ -138,6 +138,8 @@ const MenuPage = () => {
     setIsCheckingOut(true);
     const orderData = {
       userId: currentUser.id,
+      customerName: currentUser.name || currentUser.email || 'Customer',
+      customerEmail: currentUser.email || '',
       items: cart,
       totalPrice: cartTotal,
       pickupTime: pickupTime,

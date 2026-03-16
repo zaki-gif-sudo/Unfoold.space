@@ -93,8 +93,12 @@ const UserDashboard = () => {
   };
 
   const points = currentUser?.loyaltyPoints || 0;
-  const pointsToNextReward = 5 - (points % 5);
-  const progressPercentage = ((5 - pointsToNextReward) / 5) * 100;
+  const tierThresholds = [{ name: 'Bronze', min: 0 }, { name: 'Silver', min: 100 }, { name: 'Gold', min: 200 }, { name: 'Platinum', min: 500 }];
+  const currentTierIdx = tierThresholds.reduce((acc, t, i) => points >= t.min ? i : acc, 0);
+  const currentTier = tierThresholds[currentTierIdx];
+  const nextTier = tierThresholds[currentTierIdx + 1];
+  const pointsToNext = nextTier ? nextTier.min - points : 0;
+  const progressPercentage = nextTier ? ((points - currentTier.min) / (nextTier.min - currentTier.min)) * 100 : 100;
 
   return (
     <div className="min-h-screen bg-background py-12">
@@ -138,13 +142,13 @@ const UserDashboard = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-foreground">Loyalty Status</h3>
-                  <p className="text-muted-foreground font-medium">{currentUser?.membershipLevel || 'Coffee Guest'}</p>
+                  <p className="text-muted-foreground font-medium">{currentUser?.membershipLevel || 'Bronze'}</p>
                 </div>
               </div>
               <div className="flex-1 w-full max-w-md">
                 <div className="flex justify-between text-sm mb-2">
                   <span className="text-foreground font-bold">{points} Points</span>
-                  <span className="text-muted-foreground">{pointsToNextReward} more for a free coffee!</span>
+                  <span className="text-muted-foreground">{nextTier ? `${pointsToNext} lagi ke ${nextTier.name}` : 'Level tertinggi! 🏆'}</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2.5 border border-border">
                   <div className="bg-foreground h-2.5 rounded-full transition-all duration-500" style={{ width: `${progressPercentage}%` }}></div>

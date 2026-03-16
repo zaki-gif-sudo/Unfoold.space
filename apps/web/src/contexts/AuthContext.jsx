@@ -106,6 +106,15 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Password minimal 8 karakter');
       }
 
+      // Check unique name
+      const existingName = await pb.collection('users').getList(1, 1, {
+        filter: `name="${data.name.replace(/"/g, '\\"')}"`,
+        $autoCancel: false
+      });
+      if (existingName.totalItems > 0) {
+        throw new Error('Nama sudah digunakan. Pilih nama lain.');
+      }
+
       // Create user record
       const record = await pb.collection('users').create({
         name: data.name,
@@ -129,7 +138,9 @@ export const AuthProvider = ({ children }) => {
       console.error('Signup error:', error);
       
       // Parse PocketBase error messages
-      if (error.data?.data?.email?.message) {
+      if (error.message === 'Nama sudah digunakan. Pilih nama lain.') {
+        throw error;
+      } else if (error.data?.data?.email?.message) {
         throw new Error('Email sudah terdaftar');
       } else if (error.message.includes('network')) {
         throw new Error('Koneksi error. Cek internet Anda.');
@@ -144,27 +155,18 @@ export const AuthProvider = ({ children }) => {
   const requestPasswordReset = async (email) => {
     try {
       await pb.collection('users').requestPasswordReset(email, { $autoCancel: false });
-      
-      const token = crypto.randomUUID().replace(/-/g, '');
-      const expiresAt = new Date(Date.now() + 20 * 60000).toISOString();
-      await pb.collection('passwordResetTokens').create({
-        email,
-        token,
-        expiresAt,
-        used: false
-      }, { $autoCancel: false }).catch(() => {}); 
-      
     } catch (error) {
       console.error("Password reset request error:", error);
     }
   };
 
-  const resetPassword = async (token, newPassword) => {
-    await pb.collection('users').confirmPasswordReset(token, newPassword, newPassword, { $autoCancel: false });
+  const resetPassword = async (token, newPassword, passwordConfirm) => {
+    await pb.collection('users').confirmPasswordReset(token, newPassword, passwordConfirm || newPassword, { $autoCancel: false });
   };
 
   const value = {
     currentUser,
+    loading,
     login,
     logout,
     signup,
@@ -175,7 +177,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };
