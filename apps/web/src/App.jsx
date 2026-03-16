@@ -9,9 +9,11 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import KasirRoute from './components/KasirRoute.jsx';
 import OfflineIndicator from './components/OfflineIndicator.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import LoadingSpinner from './components/LoadingSpinner.jsx';
+import OrderNotificationListener from './components/OrderNotificationListener.jsx';
 
 // Lazy loaded pages for code splitting
 const HomePage = lazy(() => import('./pages/HomePage.jsx'));
@@ -26,10 +28,15 @@ const EventsListingPage = lazy(() => import('./pages/EventsListingPage.jsx'));
 const EventDetailPage = lazy(() => import('./pages/EventDetailPage.jsx'));
 const DiscussionsPage = lazy(() => import('./pages/DiscussionsPage.jsx'));
 const DiscussionDetailPage = lazy(() => import('./pages/DiscussionDetailPage.jsx'));
+const MomentsPage = lazy(() => import('./pages/MomentsPage.jsx'));
+const SocialPage = lazy(() => import('./pages/SocialPage.jsx'));
+const UserProfilePage = lazy(() => import('./pages/UserProfilePage.jsx'));
 const ProfileSettingsPage = lazy(() => import('./pages/ProfileSettingsPage.jsx'));
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation.jsx'));
 const KasirDashboard = lazy(() => import('./pages/KasirDashboard.jsx'));
 const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'));
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage.jsx'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage.jsx'));
 
 // Auth Redirect Component
 const AuthRedirect = ({ children }) => {
@@ -41,11 +48,17 @@ const AuthRedirect = ({ children }) => {
 };
 
 function AppRoutes() {
+  const { loading } = useAuth();
+
   return (
     <div className="flex flex-col min-h-screen">
       <OfflineIndicator />
+      <OrderNotificationListener />
       <Header />
       <main className="flex-grow">
+        {loading ? (
+          <LoadingSpinner message="Loading Unfoold..." />
+        ) : (
         <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner message="Loading Unfoold..." />}>
             <Routes>
@@ -56,23 +69,29 @@ function AppRoutes() {
               <Route path="/community/events/:eventId" element={<EventDetailPage />} />
               <Route path="/community/discussions" element={<DiscussionsPage />} />
               <Route path="/community/discussions/:discussionId" element={<DiscussionDetailPage />} />
+              <Route path="/community/moments" element={<MomentsPage />} />
+              <Route path="/social" element={<SocialPage />} />
+              <Route path="/social/user/:userId" element={<UserProfilePage />} />
               <Route path="/offline" element={<OfflinePage />} />
               
               {/* Auth Routes */}
               <Route path="/login" element={<AuthRedirect><LoginPage /></AuthRedirect>} />
               <Route path="/signup" element={<AuthRedirect><SignupPage /></AuthRedirect>} />
+              <Route path="/forgot-password" element={<AuthRedirect><ForgotPasswordPage /></AuthRedirect>} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
               <Route path="/reserve" element={<ProtectedRoute><ReservationPageEnhanced /></ProtectedRoute>} />
               <Route path="/reserve-old" element={<ProtectedRoute><ReservationPage /></ProtectedRoute>} />
               <Route path="/capacity" element={<ProtectedRoute><CapacityManagement /></ProtectedRoute>} />
-              <Route path="/kasir" element={<ProtectedRoute><KasirDashboard /></ProtectedRoute>} />
+              <Route path="/kasir" element={<KasirRoute><KasirDashboard /></KasirRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
               <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
             </Routes>
           </Suspense>
         </ErrorBoundary>
+        )}
       </main>
       <Footer />
     </div>

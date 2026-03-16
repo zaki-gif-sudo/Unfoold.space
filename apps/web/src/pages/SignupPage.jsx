@@ -110,7 +110,9 @@ const SignupPage = () => {
     } catch (err) {
       console.error('Signup error:', err);
       
-      if (err.message.includes('Email already in use')) {
+      if (err.message.includes('Nama sudah digunakan')) {
+        setError('Nama sudah digunakan. Pilih nama lain agar mudah ditemukan di Social.');
+      } else if (err.message.includes('Email already in use') || err.message.includes('Email sudah terdaftar')) {
         setError('Email sudah terdaftar. Coba email lain atau login.');
       } else if (err.message.includes('network')) {
         setError('Koneksi error. Cek internet Anda.');

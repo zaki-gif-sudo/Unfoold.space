@@ -78,6 +78,7 @@ const Header = () => {
                   >
                     <Link to="/community/events" className="block px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">Events</Link>
                     <Link to="/community/discussions" className="block px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">Discussions</Link>
+                    <Link to="/social" className="block px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">Social</Link>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -157,6 +158,7 @@ const Header = () => {
                 <div className="text-lg font-medium text-muted-foreground">Community</div>
                 <Link to="/community/events" className={`block pl-4 text-base ${isActive('/community/events') ? 'font-bold' : 'text-foreground'}`}>Events</Link>
                 <Link to="/community/discussions" className={`block pl-4 text-base ${isActive('/community/discussions') ? 'font-bold' : 'text-foreground'}`}>Discussions</Link>
+                <Link to="/social" className={`block pl-4 text-base ${isActive('/social') ? 'font-bold' : 'text-foreground'}`}>Social</Link>
               </div>
               
               <div className="pt-4 border-t border-border flex flex-col space-y-4">

@@ -54,8 +54,8 @@ const HomePage = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mx-auto"
           >
-            <Link to="/reserve" className="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-all hover:scale-105 shadow-lg">
-              Reserve Seat
+            <Link to="/social" className="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-all hover:scale-105 shadow-lg">
+              Join the Social
             </Link>
             <Link to="/menu" className="w-full sm:w-auto px-8 py-4 bg-transparent text-white font-bold rounded-md border-2 border-white hover:bg-white/10 transition-all hover:scale-105">
               Order Coffee

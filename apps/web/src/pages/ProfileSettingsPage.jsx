@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useAuth } from '@/contexts/AuthContext.jsx';
 import pb from '@/lib/pocketbaseClient.js';
 import BreadcrumbNav from '@/components/BreadcrumbNav.jsx';
-import { User, Mail, Phone, Award, Shield, Camera, Edit2, Check, X, Bell } from 'lucide-react';
+import { User, Mail, Phone, Award, Shield, Camera, Edit2, Check, X, Bell, Lock } from 'lucide-react';
 
 const ProfileSettingsPage = () => {
   const { currentUser } = useAuth();
@@ -26,6 +26,23 @@ const ProfileSettingsPage = () => {
     passwordConfirm: ''
   });
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(!!currentUser?.isPrivate);
+  const [isTogglingPrivate, setIsTogglingPrivate] = useState(false);
+
+  const handleTogglePrivate = async () => {
+    setIsTogglingPrivate(true);
+    try {
+      const newVal = !isPrivate;
+      await pb.collection('users').update(currentUser.id, { isPrivate: newVal }, { $autoCancel: false });
+      setIsPrivate(newVal);
+      setMessage({ type: 'success', text: newVal ? 'Akun diatur ke mode privat.' : 'Akun diatur ke mode publik.' });
+    } catch (error) {
+      console.error('Toggle private failed:', error);
+      setMessage({ type: 'error', text: 'Gagal mengubah pengaturan privasi.' });
+    } finally {
+      setIsTogglingPrivate(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -104,8 +121,12 @@ const ProfileSettingsPage = () => {
   };
 
   const points = currentUser?.loyaltyPoints || 0;
-  const pointsToNextReward = 5 - (points % 5);
-  const progressPercentage = ((5 - pointsToNextReward) / 5) * 100;
+  const tierThresholds = [{ name: 'Bronze', min: 0 }, { name: 'Silver', min: 100 }, { name: 'Gold', min: 200 }, { name: 'Platinum', min: 500 }];
+  const currentTierIdx = tierThresholds.reduce((acc, t, i) => points >= t.min ? i : acc, 0);
+  const currentTier = tierThresholds[currentTierIdx];
+  const nextTier = tierThresholds[currentTierIdx + 1];
+  const pointsToNext = nextTier ? nextTier.min - points : 0;
+  const progressPercentage = nextTier ? ((points - currentTier.min) / (nextTier.min - currentTier.min)) * 100 : 100;
   const avatarUrl = currentUser?.avatar ? pb.files.getUrl(currentUser, currentUser.avatar) : null;
 
   return (
@@ -171,7 +192,7 @@ const ProfileSettingsPage = () => {
                 </div>
                 
                 <h2 className="text-2xl font-bold text-foreground mb-1">{currentUser?.name || 'Coffee Lover'}</h2>
-                <p className="text-muted-foreground font-medium mb-4">{currentUser?.membershipLevel || 'Coffee Guest'}</p>
+                <p className="text-muted-foreground font-medium mb-4">{currentUser?.membershipLevel || 'Bronze'}</p>
                 
                 <div className="text-sm text-muted-foreground space-y-2 text-left bg-muted/50 p-4 rounded-xl border border-border">
                   <div className="flex items-center gap-3"><Mail size={16} className="text-foreground" /> <span className="truncate">{currentUser?.email}</span></div>
@@ -189,7 +210,7 @@ const ProfileSettingsPage = () => {
               <div className="mb-6">
                 <div className="flex justify-between items-end mb-2">
                   <span className="text-3xl font-bold text-foreground">{points} <span className="text-sm font-normal text-muted-foreground">pts</span></span>
-                  <span className="text-sm text-foreground font-medium">{pointsToNextReward} to next reward</span>
+                  <span className="text-sm text-foreground font-medium">{nextTier ? `${pointsToNext} ke ${nextTier.name}` : 'Max Level! 🏆'}</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-3 border border-border overflow-hidden">
                   <div className="bg-foreground h-full transition-all duration-1000 relative" style={{ width: `${progressPercentage}%` }}></div>
@@ -199,11 +220,9 @@ const ProfileSettingsPage = () => {
               <div className="space-y-3">
                 <h4 className="text-sm font-bold text-foreground uppercase tracking-wider">Current Benefits</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2"><Check size={16} className="text-foreground shrink-0 mt-0.5" /> Earn 1 point per coffee</li>
-                  <li className="flex items-start gap-2"><Check size={16} className="text-foreground shrink-0 mt-0.5" /> Free coffee every 5 points</li>
-                  {currentUser?.membershipLevel !== 'Coffee Guest' && (
-                    <li className="flex items-start gap-2"><Check size={16} className="text-foreground shrink-0 mt-0.5" /> Priority event booking</li>
-                  )}
+                  <li className="flex items-start gap-2"><Check size={16} className="text-foreground shrink-0 mt-0.5" /> 2 poin per cup pesanan</li>
+                  <li className="flex items-start gap-2"><Check size={16} className="text-foreground shrink-0 mt-0.5" /> 3 poin per event diikuti</li>
+                  <li className="flex items-start gap-2"><Check size={16} className="text-foreground shrink-0 mt-0.5" /> Bronze 0 • Silver 100 • Gold 200 • Platinum 500</li>
                 </ul>
               </div>
             </div>
@@ -292,6 +311,26 @@ const ProfileSettingsPage = () => {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Privacy Settings */}
+            <div className="bg-card rounded-2xl shadow-sm border border-border p-8">
+              <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
+                <Lock size={20} /> Privasi
+              </h3>
+              <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border border-border">
+                <div className="flex-1">
+                  <p className="font-medium text-foreground text-sm">Akun Privat</p>
+                  <p className="text-xs text-muted-foreground mt-1">Jika diaktifkan, hanya pengikut yang disetujui yang dapat melihat post dan story Anda.</p>
+                </div>
+                <button
+                  onClick={handleTogglePrivate}
+                  disabled={isTogglingPrivate}
+                  className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out disabled:opacity-50 ${isPrivate ? 'bg-foreground' : 'bg-muted-foreground/30'}`}
+                >
+                  <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-background shadow ring-0 transition duration-200 ease-in-out ${isPrivate ? 'translate-x-5' : 'translate-x-0'}`} />
+                </button>
+              </div>
             </div>
 
             {/* Security Form */}

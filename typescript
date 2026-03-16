@@ -1,0 +1,110 @@
+Script started on Wed Mar 11 01:53:50 2026
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h  ec [Khho "terminal ok"[?2004l
+terminal ok
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h  ex [Kppect -c 'spawn scp /tmp/check_pb.sh root@31.97.223.103:/tmp/check_pb.sh; expect  [K""password:"; send "Y+LMs40XQeF)vd4f\r"; expect eof'[?2004l
+spawn scp /tmp/check_pb.sh root@31.97.223.103:/tmp/check_pb.sh
+root@31.97.223.103's password: 
+check_pb.sh                                     0%    0     0.0KB/s   --:-- ETAcheck_pb.sh                                   100% 1810    48.2KB/s   00:00    
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h  ex [Kppect -c 'spawn ssh -o StrictHostKeyChecking=no root@31.97.223.103; expect "passw [Koord:"; send "Y+LMs40XQeF)vd4f\r"; expect "# "; send "bash /tmp/check_pb.sh\r"; e [Kxxpect -timeout 30 "# "; send "exit\r"; expect eof'[?2004l
+spawn ssh -o StrictHostKeyChecking=no root@31.97.223.103
+root@31.97.223.103's password: 
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-171-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue Mar 10 18:53:44 UTC 2026
+
+  System load:  0.0               Processes:             96
+  Usage of /:   4.7% of 48.27GB   Users logged in:       0
+  Memory usage: 8%                IPv4 address for eth0: 31.97.223.103
+  Swap usage:   0%                IPv6 address for eth0: 2a02:4780:59:4e02::1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+2 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '24.04.4 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Tue Mar 10 18:52:34 2026 from 118.136.58.178
+[?2004h]0;root@srv1477625: ~root@srv1477625:~# bash /tmp/check_pb.sh
+[?2004lAUTH FAILED: {"data":{},"message":"The requested resource wasn't found.","status":404}
+[?2004h]0;root@srv1477625: ~root@srv1477625:~# exit
+[?2004llogout
+Connection to 31.97.223.103 closed.
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h  ex [Kppect -c 'spawn scp /tmp/check_pb2.sh root@31.97.223.103:/tmp/check_pb2.sh; expec [Ktt "password:"; send "Y+LMs40XQeF)vd4f\r"; expect eof'[?2004l
+spawn scp /tmp/check_pb2.sh root@31.97.223.103:/tmp/check_pb2.sh
+root@31.97.223.103's password: 
+check_pb2.sh                                  100%    0     0.0KB/s   00:00    
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h  wc [K  -c /tmp/check_pb2.sh && head -3 /tmp/check_pb2.sh[?2004l
+    2789 /tmp/check_pb2.sh
+#!/bin/bash
+# Auth as superuser (PocketBase v0.23+)
+AUTH=$(curl -s 'http://localhost:8090/api/collections/_superusers/auth-with-password' \
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h[?2004l
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h  ex [Kppect -c '[?2004l
+[0m[27m[24m[Jquote> [K[?2004hsspawn ssh root@31.97.223.103[?2004l
+[0m[27m[24m[Jquote> [K[?2004heexpect "password:"[?2004l
+[0m[27m[24m[Jquote> [K[?2004hssend "Y+LMs40XQeF)vd4f\r"[?2004l
+[0m[27m[24m[Jquote> [K[?2004heexpect "# "[?2004l
+[0m[27m[24m[Jquote> [K[?2004hssend "cat /tmp/check_pb2.sh | wc -c\r"[?2004l
+[0m[27m[24m[Jquote> [K[?2004heexpect "# "[?2004l
+[0m[27m[24m[Jquote> [K[?2004hssend "exit\r"[?2004l
+[0m[27m[24m[Jquote> [K[?2004heexpect eof[?2004l
+[0m[27m[24m[Jquote> [K[?2004h'[?2004l
+spawn ssh root@31.97.223.103
+root@31.97.223.103's password: 
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-171-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue Mar 10 18:55:05 UTC 2026
+
+  System load:  0.0               Processes:             97
+  Usage of /:   4.7% of 48.27GB   Users logged in:       0
+  Memory usage: 8%                IPv4 address for eth0: 31.97.223.103
+  Swap usage:   0%                IPv6 address for eth0: 2a02:4780:59:4e02::1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+2 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '24.04.4 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Tue Mar 10 18:54:25 2026 from 118.136.58.178
+[?2004h]0;root@srv1477625: ~root@srv1477625:~# cat /tmp/check_pb2.sh | wc -c
+[?2004l0
+[?2004h]0;root@srv1477625: ~root@srv1477625:~# exit
+[?2004llogout
+Connection to 31.97.223.103 closed.
+[1m[7m%[27m[1m[0m                                                                                [0m[27m[24m[Jmacbookair@MACs-MBP-7 horizons-export-13222a4f-1f4e-4729-8f8a-40893789af3d % [K[?2004h
