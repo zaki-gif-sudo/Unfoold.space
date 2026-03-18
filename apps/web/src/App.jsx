@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import OfflineIndicator from './components/OfflineIndicator.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import LoadingSpinner from './components/LoadingSpinner.jsx';
+import SocialRedirect from './components/SocialRedirect.jsx';
 
 // Lazy loaded pages for code splitting
 const HomePage = lazy(() => import('./pages/HomePage.jsx'));
@@ -61,6 +62,7 @@ function AppRoutes() {
               {/* Auth Routes */}
               <Route path="/login" element={<AuthRedirect><LoginPage /></AuthRedirect>} />
               <Route path="/signup" element={<AuthRedirect><SignupPage /></AuthRedirect>} />
+              <Route path="/join-social" element={<SocialRedirect />} />
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />

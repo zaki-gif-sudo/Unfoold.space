@@ -3,10 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const PWAContext = createContext(null);
 
 export const registerServiceWorker = () => {
-  // Disabled for debugging - service worker causing request hangs
-  console.log('Service worker registration disabled for debugging');
-  return;
-  
+  // Service worker registration enabled for notifications & offline support
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js')

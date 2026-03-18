@@ -82,7 +82,20 @@ export const AuthProvider = ({ children }) => {
       // Artificial delay of 2.5 seconds to slow down brute force
       await delay(2500);
       
-      throw new Error('Incorrect email or password. Please try again.');
+      // Provide specific error messages based on error type
+      let errorMessage = 'Login gagal. Coba lagi.';
+      
+      if (error.status === 401 || error.status === 400) {
+        errorMessage = 'Email atau password tidak sesuai. Coba lagi.';
+      } else if (error.status === 0 || error.message?.includes('fetch') || error.message?.includes('net')) {
+        errorMessage = 'Koneksi error. Cek internet Anda.';
+      } else if (error.status >= 500) {
+        errorMessage = 'Server sedang bermasalah. Coba lagi nanti.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      throw new Error(errorMessage);
     }
   };
 

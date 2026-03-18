@@ -55,7 +55,7 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className={`text-sm font-medium transition-opacity hover:opacity-70 ${location.pathname === '/' ? 'font-bold' : 'text-foreground'}`}>Home</Link>
             <Link to="/menu" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/menu') ? 'font-bold' : 'text-foreground'}`}>Menu</Link>
-            <Link to="/reserve" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/reserve') ? 'font-bold' : 'text-foreground'}`}>Reserve</Link>
+            <Link to="/join-social" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/join-social') ? 'font-bold' : 'text-foreground'}`}>Join Social</Link>
             
             {/* Community Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -151,7 +151,7 @@ const Header = () => {
               
               <Link to="/" className={`text-lg font-medium ${location.pathname === '/' ? 'font-bold' : 'text-foreground'}`}>Home</Link>
               <Link to="/menu" className={`text-lg font-medium ${isActive('/menu') ? 'font-bold' : 'text-foreground'}`}>Menu</Link>
-              <Link to="/reserve" className={`text-lg font-medium ${isActive('/reserve') ? 'font-bold' : 'text-foreground'}`}>Reserve</Link>
+              <Link to="/join-social" className={`text-lg font-medium ${isActive('/join-social') ? 'font-bold' : 'text-foreground'}`}>Join Social</Link>
               
               <div className="space-y-2">
                 <div className="text-lg font-medium text-muted-foreground">Community</div>

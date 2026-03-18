@@ -1,10 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowRight, Coffee, Users, Star } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext.jsx';
 
 const HomePage = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSocialClick = (e) => {
+    e.preventDefault();
+    if (user) {
+      navigate('/social');
+    } else {
+      navigate('/signup');
+    }
+  };
   const featuredDrinks = [
     { name: 'Signature Mocha', image: 'https://images.unsplash.com/photo-1678791160773-c6d13bf417ac', desc: 'Rich espresso with artisanal dark chocolate.' },
     { name: 'Velvet Flat White', image: 'https://images.unsplash.com/photo-1617886336706-f9de52633191', desc: 'Smooth microfoam over a double ristretto.' },
@@ -54,9 +66,9 @@ const HomePage = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mx-auto"
           >
-            <Link to="/reserve" className="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-all hover:scale-105 shadow-lg">
-              Reserve Seat
-            </Link>
+            <button onClick={handleSocialClick} className="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-all hover:scale-105 shadow-lg">
+              Join the Social
+            </button>
             <Link to="/menu" className="w-full sm:w-auto px-8 py-4 bg-transparent text-white font-bold rounded-md border-2 border-white hover:bg-white/10 transition-all hover:scale-105">
               Order Coffee
             </Link>
@@ -160,18 +172,50 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Upcoming Events Preview */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Join The Culture</h2>
-          <p className="text-muted-foreground mb-12 max-w-2xl mx-auto">Discover our upcoming workshops, tastings, and social gatherings.</p>
+      {/* Community - Social & Events */}
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-16">Join The Culture</h2>
           
-          <div className="inline-block p-8 rounded-xl bg-card border border-border shadow-md">
-            <h3 className="text-2xl font-bold text-foreground mb-4">Community Events</h3>
-            <p className="text-muted-foreground mb-6">We host regular events to bring coffee lovers together.</p>
-            <Link to="/community/events" className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity font-medium">
-              Explore Events
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Social Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-8 rounded-xl bg-card border border-border shadow-md hover:shadow-lg transition-shadow"
+            >
+              <div className="flex items-center justify-center mb-6">
+                <div className="p-4 bg-primary/10 rounded-full">
+                  <Users size={28} className="text-primary" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-foreground text-center mb-4">Social Network</h3>
+              <p className="text-muted-foreground text-center mb-6">Connect with coffee enthusiasts, share moments, and build your community within our vibrant social space.</p>
+              <button onClick={handleSocialClick} className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity font-medium">
+                {user ? 'Go to Social' : 'Join Social'}
+              </button>
+            </motion.div>
+
+            {/* Events Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="p-8 rounded-xl bg-card border border-border shadow-md hover:shadow-lg transition-shadow"
+            >
+              <div className="flex items-center justify-center mb-6">
+                <div className="p-4 bg-primary/10 rounded-full">
+                  <Star size={28} className="text-primary" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-foreground text-center mb-4">Community Events</h3>
+              <p className="text-muted-foreground text-center mb-6">Discover our upcoming workshops, tastings, and social gatherings to celebrate coffee culture together.</p>
+              <Link to="/events" className="block px-6 py-3 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity font-medium text-center">
+                Explore Events
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
