@@ -12,8 +12,6 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import OfflineIndicator from './components/OfflineIndicator.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import LoadingSpinner from './components/LoadingSpinner.jsx';
-import SocialRedirect from './components/SocialRedirect.jsx';
-
 // Lazy loaded pages for code splitting
 const HomePage = lazy(() => import('./pages/HomePage.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
@@ -31,6 +29,9 @@ const ProfileSettingsPage = lazy(() => import('./pages/ProfileSettingsPage.jsx')
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation.jsx'));
 const KasirDashboard = lazy(() => import('./pages/KasirDashboard.jsx'));
 const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'));
+const SocialPage = lazy(() => import('./pages/SocialPage.jsx'));
+const MomentsPage = lazy(() => import('./pages/MomentsPage.jsx'));
+const UserProfilePage = lazy(() => import('./pages/UserProfilePage.jsx'));
 
 // Auth Redirect Component
 const AuthRedirect = ({ children }) => {
@@ -59,10 +60,14 @@ function AppRoutes() {
               <Route path="/community/discussions/:discussionId" element={<DiscussionDetailPage />} />
               <Route path="/offline" element={<OfflinePage />} />
               
+              {/* Social Routes */}
+              <Route path="/social" element={<ProtectedRoute><SocialPage /></ProtectedRoute>} />
+              <Route path="/social/user/:userId" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
+              <Route path="/moments" element={<ProtectedRoute><MomentsPage /></ProtectedRoute>} />
+              
               {/* Auth Routes */}
               <Route path="/login" element={<AuthRedirect><LoginPage /></AuthRedirect>} />
               <Route path="/signup" element={<AuthRedirect><SignupPage /></AuthRedirect>} />
-              <Route path="/join-social" element={<SocialRedirect />} />
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />

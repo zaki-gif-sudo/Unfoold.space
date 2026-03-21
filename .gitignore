@@ -4,11 +4,14 @@ dist/
 .env.*.local
 .DS_Store
 *.log
-pocketbase
+# PocketBase binary (not the apps/pocketbase/ source folder)
+**/pocketbase/pocketbase
 pocketbase-prod/
 *.zip
 prod_data_export/
 pb_data_encrypted_backup/
+pb_data/
 *.py
 Zakialisapari10!
 Zakialisapari10!.pub
+.vercel

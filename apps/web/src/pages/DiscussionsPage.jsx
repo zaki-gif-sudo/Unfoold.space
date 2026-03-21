@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext.jsx';
 import pb from '@/lib/pocketbaseClient.js';
 import BreadcrumbNav from '@/components/BreadcrumbNav.jsx';
 import { MessageSquare, Heart, Plus, X, Filter, Clock, AlertTriangle, RefreshCw } from 'lucide-react';
+import VerifiedBadge from '@/components/VerifiedBadge.jsx';
 import { withRetry } from '@/utils/apiErrorHandler.js';
 
 const CATEGORIES = ['All', 'Coffee Talk', 'Ideas & Creativity', 'Meetups', 'General'];
@@ -231,7 +232,7 @@ const DiscussionsPage = () => {
                     <p className="text-muted-foreground text-sm line-clamp-2 mb-4">{disc.content}</p>
                     
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="font-medium text-foreground/80">By {disc.expand?.userId?.name || 'Anonymous'}</span>
+                      <span className="font-medium text-foreground/80 flex items-center gap-1">By {disc.expand?.userId?.name || 'Anonymous'}{disc.expand?.userId?.isVerified && <VerifiedBadge size={14} />}</span>
                       <span className="flex items-center gap-1"><MessageSquare size={14} /> {disc.replyCount} Replies</span>
                     </div>
                   </div>

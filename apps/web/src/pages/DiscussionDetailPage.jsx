@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext.jsx';
 import pb from '@/lib/pocketbaseClient.js';
 import BreadcrumbNav from '@/components/BreadcrumbNav.jsx';
 import { MessageSquare, Heart, Clock, User, Send, AlertCircle } from 'lucide-react';
+import VerifiedBadge from '@/components/VerifiedBadge.jsx';
 
 const DiscussionDetailPage = () => {
   const { discussionId } = useParams();
@@ -156,7 +157,7 @@ const DiscussionDetailPage = () => {
                 )}
               </div>
               <div>
-                <p className="font-bold text-foreground">{discussion.expand?.userId?.name || 'Anonymous'}</p>
+                <p className="font-bold text-foreground flex items-center gap-1">{discussion.expand?.userId?.name || 'Anonymous'}{discussion.expand?.userId?.isVerified && <VerifiedBadge size={16} />}</p>
                 <p className="text-xs text-muted-foreground">Author</p>
               </div>
             </div>
@@ -205,7 +206,7 @@ const DiscussionDetailPage = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-foreground">{reply.expand?.userId?.name || 'Anonymous'}</span>
+                    <span className="font-bold text-foreground flex items-center gap-1">{reply.expand?.userId?.name || 'Anonymous'}{reply.expand?.userId?.isVerified && <VerifiedBadge size={14} />}</span>
                     <span className="text-xs text-muted-foreground">{new Date(reply.createdAt).toLocaleString()}</span>
                   </div>
                   <p className="text-foreground/90 whitespace-pre-wrap mb-4">{reply.content}</p>
