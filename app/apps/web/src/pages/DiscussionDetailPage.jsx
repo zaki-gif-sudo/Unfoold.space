@@ -150,7 +150,7 @@ const DiscussionDetailPage = () => {
             <div className="flex items-center gap-4 mb-8 pb-8 border-b border-border/50">
               <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-primary border border-border overflow-hidden">
                 {discussion.expand?.userId?.avatar ? (
-                  <img src={pb.files.getUrl(discussion.expand.userId, discussion.expand.userId.avatar)} alt="Avatar" className="w-full h-full object-cover" />
+                  <img src={pb.files.getURL(discussion.expand.userId, discussion.expand.userId.avatar)} alt="Avatar" className="w-full h-full object-cover" />
                 ) : (
                   <User size={20} />
                 )}
@@ -198,7 +198,7 @@ const DiscussionDetailPage = () => {
               <div key={reply.id} className="bg-card rounded-xl p-6 border border-border shadow-sm flex gap-4">
                 <div className="w-10 h-10 bg-secondary rounded-full flex-shrink-0 flex items-center justify-center text-primary overflow-hidden">
                   {reply.expand?.userId?.avatar ? (
-                    <img src={pb.files.getUrl(reply.expand.userId, reply.expand.userId.avatar)} alt="Avatar" className="w-full h-full object-cover" />
+                    <img src={pb.files.getURL(reply.expand.userId, reply.expand.userId.avatar)} alt="Avatar" className="w-full h-full object-cover" />
                   ) : (
                     <User size={16} />
                   )}

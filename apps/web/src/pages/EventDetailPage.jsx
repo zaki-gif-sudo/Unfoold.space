@@ -164,7 +164,7 @@ const EventDetailPage = () => {
   const registeredCount = event.registeredUsers ? event.registeredUsers.length : 0;
   const isFull = registeredCount >= event.capacity;
   const isRegistered = !!registrationRecord;
-  const imageUrl = event.image ? pb.files.getUrl(event, event.image) : (CATEGORY_IMAGES[event.category] || CATEGORY_IMAGES['Coffee Cupping']);
+  const imageUrl = event.image ? pb.files.getURL(event, event.image) : (CATEGORY_IMAGES[event.category] || CATEGORY_IMAGES['Coffee Cupping']);
 
   return (
     <div className="min-h-screen bg-background pb-20">

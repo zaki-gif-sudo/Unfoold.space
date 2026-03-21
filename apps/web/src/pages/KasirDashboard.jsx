@@ -255,7 +255,7 @@ const KasirDashboard = () => {
 
                   <div>
                     <p className="text-xs text-muted-foreground">Total</p>
-                    <p className="text-lg font-bold text-primary">Rp {order.total_price?.toLocaleString()}</p>
+                    <p className="text-lg font-bold text-primary">Rp {order.totalPrice?.toLocaleString()}</p>
                   </div>
                 </div>
 

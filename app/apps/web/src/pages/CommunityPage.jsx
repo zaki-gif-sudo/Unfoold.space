@@ -89,7 +89,7 @@ const CommunityPage = () => {
                 <div key={event.id} className="bg-card rounded-xl overflow-hidden border border-border shadow-lg flex flex-col">
                   <div className="h-48 bg-secondary relative">
                     {event.image ? (
-                      <img src={pb.files.getUrl(event, event.image)} alt={event.title} className="w-full h-full object-cover" />
+                      <img src={pb.files.getURL(event, event.image)} alt={event.title} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-secondary text-muted-foreground">
                         <Users size={48} className="opacity-20" />

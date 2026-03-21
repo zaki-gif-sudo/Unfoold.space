@@ -106,7 +106,7 @@ const ProfileSettingsPage = () => {
   const points = currentUser?.loyaltyPoints || 0;
   const pointsToNextReward = 5 - (points % 5);
   const progressPercentage = ((5 - pointsToNextReward) / 5) * 100;
-  const avatarUrl = currentUser?.avatar ? pb.files.getUrl(currentUser, currentUser.avatar) : null;
+  const avatarUrl = currentUser?.avatar ? pb.files.getURL(currentUser, currentUser.avatar) : null;
 
   return (
     <div className="min-h-screen bg-background py-12">

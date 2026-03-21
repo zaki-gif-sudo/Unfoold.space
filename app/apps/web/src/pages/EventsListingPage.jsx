@@ -139,7 +139,7 @@ const EventsListingPage = () => {
               const registeredCount = event.registeredUsers ? event.registeredUsers.length : 0;
               const isFull = registeredCount >= event.capacity;
               const imageUrl = event.image 
-                ? pb.files.getUrl(event, event.image) 
+                ? pb.files.getURL(event, event.image) 
                 : (CATEGORY_IMAGES[event.category] || CATEGORY_IMAGES['Coffee Cupping']);
 
               return (

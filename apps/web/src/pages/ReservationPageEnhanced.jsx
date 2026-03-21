@@ -82,10 +82,10 @@ const ReservationPageEnhanced = () => {
     setSubmitting(true);
     try {
       const reservation = await pb.collection('reservations').create({
-        user_id: currentUser.id,
+        userId: currentUser.id,
         date: date,
         time: time,
-        number_of_guests: parseInt(guests),
+        numberOfGuests: parseInt(guests),
         table_id: selectedTable.id,
         special_requests: requests,
         status: 'confirmed'
