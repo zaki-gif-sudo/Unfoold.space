@@ -38,15 +38,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start space-x-3 text-sm text-muted-foreground">
                 <MapPin size={18} className="text-foreground shrink-0 mt-0.5" />
-                <span>123 Espresso Ave, Coffee District<br/>Cityville, ST 12345</span>
+                <span>Jl. Raya Pandaan - Bangil, Mbajang, Kb. Waris,<br/>Kec. Pandaan, Pasuruan, Jawa Timur</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-muted-foreground">
                 <Phone size={18} className="text-foreground shrink-0" />
-                <span>(555) 123-4567</span>
+                <span>+62 881-0266-06288</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-muted-foreground">
                 <Mail size={18} className="text-foreground shrink-0" />
-                <span>hello@unfoold.com</span>
+                <span>unfooldespresso@gmail.com</span>
               </li>
             </ul>
           </div>
