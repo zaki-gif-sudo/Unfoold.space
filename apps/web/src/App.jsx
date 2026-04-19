@@ -17,17 +17,12 @@ const HomePage = lazy(() => import('./pages/HomePage.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
 const SignupPage = lazy(() => import('./pages/SignupPage.jsx'));
 const UserDashboard = lazy(() => import('./pages/UserDashboard.jsx'));
-const MenuPage = lazy(() => import('./pages/MenuPage.jsx'));
-const ReservationPage = lazy(() => import('./pages/ReservationPage.jsx'));
-const ReservationPageEnhanced = lazy(() => import('./pages/ReservationPageEnhanced.jsx'));
-const CapacityManagement = lazy(() => import('./pages/CapacityManagement.jsx'));
+const MenuShowcasePage = lazy(() => import('./pages/MenuShowcasePage.jsx'));
 const EventsListingPage = lazy(() => import('./pages/EventsListingPage.jsx'));
 const EventDetailPage = lazy(() => import('./pages/EventDetailPage.jsx'));
 const DiscussionsPage = lazy(() => import('./pages/DiscussionsPage.jsx'));
 const DiscussionDetailPage = lazy(() => import('./pages/DiscussionDetailPage.jsx'));
 const ProfileSettingsPage = lazy(() => import('./pages/ProfileSettingsPage.jsx'));
-const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation.jsx'));
-const KasirDashboard = lazy(() => import('./pages/KasirDashboard.jsx'));
 const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'));
 const SocialPage = lazy(() => import('./pages/SocialPage.jsx'));
 const MomentsPage = lazy(() => import('./pages/MomentsPage.jsx'));
@@ -53,7 +48,7 @@ function AppRoutes() {
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<HomePage />} />
-              <Route path="/menu" element={<MenuPage />} />
+              <Route path="/menu-showcase" element={<MenuShowcasePage />} />
               <Route path="/community/events" element={<EventsListingPage />} />
               <Route path="/community/events/:eventId" element={<EventDetailPage />} />
               <Route path="/community/discussions" element={<DiscussionsPage />} />
@@ -71,12 +66,10 @@ function AppRoutes() {
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
-              <Route path="/reserve" element={<ProtectedRoute><ReservationPageEnhanced /></ProtectedRoute>} />
-              <Route path="/reserve-old" element={<ProtectedRoute><ReservationPage /></ProtectedRoute>} />
-              <Route path="/capacity" element={<ProtectedRoute><CapacityManagement /></ProtectedRoute>} />
-              <Route path="/kasir" element={<ProtectedRoute><KasirDashboard /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
-              <Route path="/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
+              
+              {/* Catch all - redirect to home */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
         </ErrorBoundary>

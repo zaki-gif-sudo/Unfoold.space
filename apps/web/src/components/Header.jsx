@@ -53,9 +53,10 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className={`text-sm font-medium transition-opacity hover:opacity-70 ${location.pathname === '/' ? 'font-bold' : 'text-foreground'}`}>Home</Link>
-            <Link to="/menu" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/menu') ? 'font-bold' : 'text-foreground'}`}>Menu</Link>
-            <Link to="/social" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/social') ? 'font-bold' : 'text-foreground'}`}>Social</Link>
+            <Link to="/" className={`text-sm font-medium transition-opacity hover:opacity-70 ${location.pathname === '/' ? 'font-bold' : 'text-foreground'}`}>🏠 Home</Link>
+            <Link to="/menu-showcase" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/menu-showcase') ? 'font-bold' : 'text-foreground'}`}>☕ Menu</Link>
+            <Link to="/social" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/social') ? 'font-bold' : 'text-foreground'}`}>💬 Social</Link>
+            <Link to="/moments" className={`text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/moments') ? 'font-bold' : 'text-foreground'}`}>📸 Moments</Link>
             
             {/* Community Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -63,7 +64,7 @@ const Header = () => {
                 onClick={() => setIsCommunityOpen(!isCommunityOpen)}
                 className={`flex items-center space-x-1 text-sm font-medium transition-opacity hover:opacity-70 ${isActive('/community') ? 'font-bold' : 'text-foreground'}`}
               >
-                <span>Community</span>
+                <span>🎉 Community</span>
                 <ChevronDown size={16} className={`transition-transform duration-200 ${isCommunityOpen ? 'rotate-180' : ''}`} />
               </button>
               
@@ -76,8 +77,8 @@ const Header = () => {
                     transition={{ duration: 0.2 }}
                     className="absolute top-full left-0 mt-2 w-48 bg-card border border-border rounded-md shadow-xl py-2 z-50"
                   >
-                    <Link to="/community/events" className="block px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">Events</Link>
-                    <Link to="/community/discussions" className="block px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">Discussions</Link>
+                    <Link to="/community/events" className="block px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">📅 Events</Link>
+                    <Link to="/community/discussions" className="block px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">💭 Discussions</Link>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -149,14 +150,15 @@ const Header = () => {
                 </button>
               )}
               
-              <Link to="/" className={`text-lg font-medium ${location.pathname === '/' ? 'font-bold' : 'text-foreground'}`}>Home</Link>
-              <Link to="/menu" className={`text-lg font-medium ${isActive('/menu') ? 'font-bold' : 'text-foreground'}`}>Menu</Link>
-              <Link to="/social" className={`text-lg font-medium ${isActive('/social') ? 'font-bold' : 'text-foreground'}`}>Social</Link>
+              <Link to="/" className={`text-lg font-medium ${location.pathname === '/' ? 'font-bold' : 'text-foreground'}`}>🏠 Home</Link>
+              <Link to="/menu-showcase" className={`text-lg font-medium ${isActive('/menu-showcase') ? 'font-bold' : 'text-foreground'}`}>☕ Menu</Link>
+              <Link to="/social" className={`text-lg font-medium ${isActive('/social') ? 'font-bold' : 'text-foreground'}`}>💬 Social</Link>
+              <Link to="/moments" className={`text-lg font-medium ${isActive('/moments') ? 'font-bold' : 'text-foreground'}`}>📸 Moments</Link>
               
               <div className="space-y-2">
-                <div className="text-lg font-medium text-muted-foreground">Community</div>
-                <Link to="/community/events" className={`block pl-4 text-base ${isActive('/community/events') ? 'font-bold' : 'text-foreground'}`}>Events</Link>
-                <Link to="/community/discussions" className={`block pl-4 text-base ${isActive('/community/discussions') ? 'font-bold' : 'text-foreground'}`}>Discussions</Link>
+                <div className="text-lg font-medium text-muted-foreground">🎉 Community</div>
+                <Link to="/community/events" className={`block pl-4 text-base ${isActive('/community/events') ? 'font-bold' : 'text-foreground'}`}>📅 Events</Link>
+                <Link to="/community/discussions" className={`block pl-4 text-base ${isActive('/community/discussions') ? 'font-bold' : 'text-foreground'}`}>💭 Discussions</Link>
               </div>
               
               <div className="pt-4 border-t border-border flex flex-col space-y-4">
